@@ -19,9 +19,11 @@ describe('Mocha steps demo', () => {
     // declare variables use through test steps run
     // let browser;
     let page;
+    // let tablet;
+    // let mobile;
 
     // works before run test steps
-    before(async function(){
+    before(async () => {
         // launch a new browser instance
         // browser = await puppeteer.launch({ headless: true });
 
@@ -29,38 +31,34 @@ describe('Mocha steps demo', () => {
         // page = await browser.newPage();
         page = await Page.build('Desktop');
 
+        // create a new tablet instance
+        // tablet = await Page.build('Tablet');
+
+        // create a new mobile instance
+        // mobile = await Page.build('Mobile');
+
         // delay timeout 7s
         // page.setDefaultTimeout(7000);
     });
 
     // works as test steps run done
-    after(async function(){
+    after(async () => {
         // close the browser instance
         // await browser.close();
         await page.close();
+        // await tablet.close();
+        // await mobile.close();
     })
 
     // TC-XXX (xstep)
     step('should load google homepage', async () => {
-        // visit to google homepage
-        await page.goto('https://google.com');
-    });
+        // visit to zero bank homepage
+        await page.goto('http://zero.webappsecurity.com');
 
-    // TC-XXX (xstep)
-    step('step2 should fail', async () => {
-        // wait for DOM displayed
-        await page.waitForSelector('#FAIL');
-    });
+        // invoke method to click to online banking menu
+        await page.waitAndClick('#onlineBankingMenu');
 
-    // TC-XXX (xstep)
-    step('step3', async () => {
-        // log for tracking
-        console.log('step3');
-    });
-
-    // TC-XXX (xstep)
-    step('step4', async () => {
-        // log for tracking
-        console.log('step4');
+        // wait for 5s delay time
+        await page.waitForTimeout(5000);
     });
 });

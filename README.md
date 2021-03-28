@@ -70,3 +70,16 @@
 - Setup percy variable to window environment
 
 ## 2. Start project
+
+## 3. Other
+
+### 3.1 Fix bug
+
+> [Error: EPERM: operation not permitted, unlink 'C:\Users\<username>\AppData\Local\Temp\puppeteer_dev_chrome_profile-ueqolL\CrashpadMetrics-active.pma']
+
+```bat
+rd /s /q C:\Users\foo\AppData\Roaming\npm-cache
+rd /s /q C:\Users\foo\AppData\Roaming\npm
+npm clean cache --force
+npm install --no-bin-links --no-optional
+```

@@ -6,9 +6,9 @@
     "scripts": {
         "// test": "node ./node_modules/mocha/bin/mocha --timeout=30000 ./build/tests/**.js",
         "test": "node ./node_modules/mocha/bin/mocha --timeout=30000 --require mocha-steps ./build/tests/**.js",
-        "// rm use in mac or linux":"",
+        "// rm use in mac or linux": "",
         "// clean": "rm -rf build",
-        "// del use in window":"",
+        "// del use in window": "",
         "clean": "cd scripts && rm-rf.bat",
         "build": "babel --preset es2015 -d build/ src/"
     },
