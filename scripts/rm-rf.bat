@@ -1,3 +1,6 @@
+:: slient command
+@echo off
+
 :: move to parent folder
 cd ..
 
@@ -7,3 +10,6 @@ FOR /D %%p IN ("build\*.*") DO rmdir "%%p" /s /q
 
 :: del build folder self
 rmdir /q "build"
+
+:: echo command
+@echo on

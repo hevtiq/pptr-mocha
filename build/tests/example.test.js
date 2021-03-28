@@ -6,19 +6,24 @@
 'use strict';
 
 // bring puppeteer module as a middleware
-import puppeteer from 'puppeteer';
 
-import { step } from 'mocha-steps';
+var _puppeteer = require('puppeteer');
 
-describe('Mocha steps demo', () => {
+var _puppeteer2 = _interopRequireDefault(_puppeteer);
+
+var _mochaSteps = require('mocha-steps');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+describe('Mocha steps demo', function () {
     // declare variables use through test steps run
-    let browser;
-    let page;
+    var browser = void 0;
+    var page = void 0;
 
     // prepare before test steps run
-    before(async function(){
+    before(async function () {
         // launch a new browser instance
-        browser = await puppeteer.launch({ headless: true });
+        browser = await _puppeteer2.default.launch({ headless: true });
 
         // create a new page instance
         page = await browser.newPage();
@@ -28,24 +33,24 @@ describe('Mocha steps demo', () => {
     });
 
     // works as test steps done
-    after(async function(){
+    after(async function () {
         // close the browser instance
         await browser.close();
-    })
+    });
 
-    step('should load google homepage', async () => {
+    (0, _mochaSteps.step)('should load google homepage', async function () {
         await page.goto('https://google.com');
     });
-    
-    step('step2 should fail', async () => {
+
+    (0, _mochaSteps.step)('step2 should fail', async function () {
         await page.waitForSelector('#FAIL');
     });
 
-    step('step3', async () => {
+    (0, _mochaSteps.step)('step3', async function () {
         console.log('step3');
     });
 
-    step('step4', async () => {
+    (0, _mochaSteps.step)('step4', async function () {
         console.log('step4');
     });
 });
