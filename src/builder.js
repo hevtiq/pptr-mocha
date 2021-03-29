@@ -13,17 +13,19 @@ export default class Builder {
     /**
      * Method to build a page
      * @param {*} viewport viewport set
-     * @returns 
+     * @returns proxy
      */
     static async build(viewport) {
         // options to overwrite viewport
         const launchOptions = {
             headless: false,
-            slowMo: 0,
+            ignoreHTTPSErrors: true,
+            slowMo: 50,
             args: [
                 '--no-sandbox',  // not a sandbox
                 '--disable-setui-sandbox',
                 '--disable-web-security',
+                '--ignore-certificate-errors',
             ],
         };
 
@@ -54,7 +56,7 @@ export default class Builder {
                 break;
             default:
                 throw new Error('Supported devices are only Mobile | Tablet | Desktop');
-        }
+        };
 
         // return a new javascript proxy instance to combine extended page into one class
         return new Proxy(extendedPage, {

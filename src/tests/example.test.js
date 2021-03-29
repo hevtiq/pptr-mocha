@@ -8,8 +8,11 @@
 // bring puppeteer module as a middleware
 // import puppeteer, { PageEmittedEvents } from 'puppeteer';
 
-// bring mocha-steps module as middleware
+// bring mocha-steps step module as middleware
 import { step } from 'mocha-steps';
+
+// bring chai expect module as middleware
+import { expect } from 'chai';
 
 // bring Page module as middleware
 import Page from '../builder';
@@ -18,7 +21,7 @@ import Page from '../builder';
 describe('Mocha steps demo', () => {
     // declare variables use through test steps run
     // let browser;
-    let page;
+    let desktop;
     // let tablet;
     // let mobile;
 
@@ -29,7 +32,7 @@ describe('Mocha steps demo', () => {
 
         // create a new page instance
         // page = await browser.newPage();
-        page = await Page.build('Desktop');
+        desktop = await Page.build('Desktop');
 
         // create a new tablet instance
         // tablet = await Page.build('Tablet');
@@ -44,21 +47,49 @@ describe('Mocha steps demo', () => {
     // works as test steps run done
     after(async () => {
         // close the browser instance
-        // await browser.close();
-        await page.close();
-        // await tablet.close();
-        // await mobile.close();
-    })
+        let pages = await desktop.pages();
+        await Promise.all(pages.map(page =>page.close()));
+    });
 
     // TC-XXX (xstep)
-    step('should load google homepage', async () => {
+    step('should load zero bank homepage', async () => {
         // visit to zero bank homepage
-        await page.goto('http://zero.webappsecurity.com');
+        await desktop.goto('http://zero.webappsecurity.com');
 
-        // invoke method to click to online banking menu
-        await page.waitAndClick('#onlineBankingMenu');
+        // expect that sign in button visible
+        expect(await desktop.isElementVisible('#signin_button')).to.be.true;
+    });
 
-        // wait for 5s delay time
-        await page.waitForTimeout(5000);
+    // TC-XXX (xstep)
+    step('should display login form', async () => {
+        // invoke method to click to sign in button
+        await desktop.waitAndClick('#signin_button');
+
+        // expect that login form visible
+        expect(await desktop.isElementVisible('#login_form')).to.be.true;
+
+        // expect that sign in button visible
+        expect(await desktop.isElementVisible('#signin_button')).to.be.false;
+    });
+
+    // TC-XXX (xstep)
+    step('should login to application', async () => {
+        // invoke method to type into username field
+        await desktop.waitAndType('#user_login', 'username');
+
+        // invoke method to type into password field
+        await desktop.waitAndType('#user_password', 'password');
+
+        // invoke method to click button submit
+        await desktop.waitAndClick('.btn-primary');
+
+        // expect that nav tabs visible
+        expect(await desktop.isElementVisible('.nav-tabs')).to.be.true;
+    });
+
+    // TC-XXX (xstep)
+    step('should have 6 nav tab links', async () => {
+        // expect that have 6 nav tab links
+        expect(await desktop.getCount('.nav-tabs li')).to.equal(6);
     });
 });
