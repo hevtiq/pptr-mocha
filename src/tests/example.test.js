@@ -17,6 +17,9 @@ import { expect } from 'chai';
 // bring Page module as middleware
 import Page from '../builder';
 
+// bring LoginPage module as middleware
+import LoginPage from '../pages/LoginPage';
+
 // invoke test include test steps
 describe('Mocha steps demo', () => {
     // declare variables use through test steps run
@@ -24,6 +27,7 @@ describe('Mocha steps demo', () => {
     let desktop;
     // let tablet;
     // let mobile;
+    let loginPage;
 
     // works before run test steps
     before(async () => {
@@ -40,8 +44,8 @@ describe('Mocha steps demo', () => {
         // create a new mobile instance
         // mobile = await Page.build('Mobile');
 
-        // delay timeout 7s
-        // page.setDefaultTimeout(7000);
+        // create a new loginPage instance
+        loginPage = await new LoginPage(desktop);
     });
 
     // works as test steps run done
@@ -75,13 +79,16 @@ describe('Mocha steps demo', () => {
     // TC-XXX (xstep)
     step('should login to application', async () => {
         // invoke method to type into username field
-        await desktop.waitAndType('#user_login', 'username');
+        // await desktop.waitAndType('#user_login', 'username');
 
         // invoke method to type into password field
-        await desktop.waitAndType('#user_password', 'password');
+        // await desktop.waitAndType('#user_password', 'password');
 
         // invoke method to click button submit
-        await desktop.waitAndClick('.btn-primary');
+        // await desktop.waitAndClick('.btn-primary');
+
+        // invoke method to login to Login Page
+        await loginPage.login('username', 'password');
 
         // expect that nav tabs visible
         expect(await desktop.isElementVisible('.nav-tabs')).to.be.true;

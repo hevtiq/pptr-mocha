@@ -74,8 +74,8 @@ export default class Builder {
     };
 
     /**
-     * Constructor
-     * @param {*} page page be invoked
+     * constructor() method to create and initialize objects with a class
+     * @param {*} page - page property be invoked
      */
     constructor(page) {
         this.page = page;
